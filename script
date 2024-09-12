@@ -1,0 +1,32 @@
+// ==UserScript==
+// @name        Shahaf+
+// @namespace   Violentmonkey Scripts
+// @match       https://atidraziel.iscool.co.il/default.aspx
+// @version     1.0
+// @author      Micha Schwarzband
+// ==/UserScript==
+
+const times = [
+  ["08:15", "09:00"],
+  ["09:00", "09:45"],
+  ["09:55", "10:35"],
+  ["10:40", "11:20"],
+  ["11:20", "12:10"],
+  ["12:15", "13:00"],
+  ["13:40", "14:20"],
+  ["14:25", "15:10"],
+  ["15:10", "15:50"],
+  ["15:50", "16:30"]
+];
+
+const table = document.querySelector(".TTTable").children[0];
+table.children[0].children[0].setAttribute("width", "40");
+let period = 2;
+
+for (let i = 0; i < times.length; i++) {
+  table.children[i + period].children[0].children[0].innerHTML += `<br><br>${times[i][0]}<br>-<br>${times[i][1]}`;
+  if (i + 1 < times.length && times[i][1] != times[i + 1][0]) {
+    table.children[i + period].outerHTML += `<tr bgcolor="#ffffff" valign="top"><td colspan="7" style="text-align: center;" dir="ltr"><b>${times[i][1]} - ${times[i + 1][0]}</b></td></tr>`;
+    period++;
+  }
+}
